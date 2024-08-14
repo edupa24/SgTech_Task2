@@ -2,13 +2,17 @@
 {
     internal class Service
     {
-        private string _accessToken;
+        private readonly Lazy<Task<string>> _accessTokenLzy;
+
+        public Service()
+        {
+            _accessTokenLzy = new Lazy<Task<string>>(GetAccessToken);
+        }
 
         public async Task ProcessAsync(int i)
         {
-            _accessToken ??= await GetAccessToken();
-            
-            Console.WriteLine($"Process {i} with AccessToken {_accessToken}");
+            var accessToken = await _accessTokenLzy.Value;
+            Console.WriteLine($"Task {i} is with lazy access token {accessToken}");
         }
 
         private async Task<string> GetAccessToken()
