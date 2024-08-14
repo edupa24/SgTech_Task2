@@ -1,0 +1,1 @@
+﻿Change the logic of the app - AccessToken should be created only once so you need to update ProcessAsync method for it. You cannot change Program.cs file.
